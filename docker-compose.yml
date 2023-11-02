@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  postgres:
+    # 使用するpostgresのバージョン
+    image: postgres:15-alpine
+    container_name: postgres
+    # もしポート5432を使用済みなら左の値を変える
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/postgres/init.d:/docker-entrypoint-initdb.d
+      - ./docker/postgres/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: udemy_user
+      POSTGRES_PASSWORD: udemy_pass
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8'
+      POSTGRES_DB: udemydb
+    hostname: postgres
+    restart: always
+    user: root
